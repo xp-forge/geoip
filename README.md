@@ -20,41 +20,23 @@ $database= GeoIpDatabase::open(new FileInputStream('GeoLite2-City.mmdb'));
 $results= $database->lookup('8.8.8.8');
 $database->close();
 
-// [
-//   city => [
-//     geoname_id => 5375480
-//     names => [en => "Mountain View"]
+// com.maxmind.geoip.Record@{
+//   [city        ] com.maxmind.geoip.Name(#5375480: Mountain View)
+//   [country     ] com.maxmind.geoip.Name(#6252001: United States)
+//   [continent   ] com.maxmind.geoip.Name(#6255149: North America)
+//   [postal      ] [
+//     code => "94035"
 //   ]
-//   continent => [
-//     code => "NA"
-//     geoname_id => 6255149
-//     names => [en => "North America"]
-//   ]
-//   country => [
-//     geoname_id => 6252001
-//     iso_code => "US"
-//     names => [en => "United States"]
-//   ]
-//   location => [
+//   [location    ] [
 //     latitude => 37.386
 //     longitude => -122.0838
 //     metro_code => 807
 //     time_zone => "America/Los_Angeles"
 //   ]
-//   postal => [
-//     code => "94035"
-//   ]
-//   registered_country => [
-//     geoname_id => 6252001
-//     iso_code => "US"
-//     names => [en => "United States"]
-//   ]
-//   subdivisions => [
-//     [
-//       geoname_id => 5332921
-//       iso_code => "CA"
-//       names => [en => "California"]
-//     ]
-//   ]
-// ]
+//   [subdivisions] [com.maxmind.geoip.Name(#5332921: California)]
+// }
 ```
+
+See also
+--------
+http://maxmind.github.io/MaxMind-DB/

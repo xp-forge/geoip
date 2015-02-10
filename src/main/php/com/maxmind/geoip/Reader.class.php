@@ -22,14 +22,14 @@ class Reader extends \lang\Object implements \lang\Closeable {
    * Looks up an IP address
    *
    * @param  string $addr
-   * @return var or NULL if nothing is found.
+   * @return com.maxmind.geoip.Record or NULL if nothing is found.
    */
   public function lookup($addr) {
     $offset= $this->in->offsetOf($addr);
     if (-1 === $offset) {
       return null;
     } else {
-      return $this->in->valueAt($offset);
+      return new Record($this->in->valueAt($offset));
     }
   }
 
