@@ -222,6 +222,15 @@ class Input extends \lang\Object {
     return $this->nextValue();
   }
 
+  /**
+   * Closes underlying input stream
+   *
+   * @return void
+   */
+  public function close() {
+    $this->in->close();
+  }
+
   private function nextBytes($size) {
     return $this->in->read($size);
   }

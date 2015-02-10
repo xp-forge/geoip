@@ -6,7 +6,7 @@ use io\streams\MemoryInputStream;
 use lang\FormatException;
 use lang\IllegalStateException;
 
-class Reader extends \lang\Object {
+class Reader extends \lang\Object implements \lang\Closeable {
   private $in;
 
   /**
@@ -31,5 +31,14 @@ class Reader extends \lang\Object {
     } else {
       return $this->in->valueAt($offset);
     }
+  }
+
+  /**
+   * Closes underlying input
+   *
+   * @return void
+   */
+  public function close() {
+    $this->in->close();
   }
 }

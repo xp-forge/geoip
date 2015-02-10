@@ -18,6 +18,7 @@ use io\streams\FileInputStream;
 
 $database= GeoIpDatabase::open(new FileInputStream('GeoLite2-City.mmdb'));
 $results= $database->lookup('8.8.8.8');
+$database->close();
 
 // [
 //   city => [
