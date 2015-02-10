@@ -20,7 +20,7 @@ class Reader extends \lang\Object {
    *
    * @param  io.streams.InputStream $in
    * @throws lang.IllegalArgumentException if stream is not seekable
-   * @throws lang.FormatException if the meta data cannot be found
+   * @throws lang.FormatException if the meta data cannot be found or is malformed
    */
   public function __construct(InputStream $in) {
     if (!$in instanceof Seekable) {
@@ -37,9 +37,7 @@ class Reader extends \lang\Object {
       $this->in->seek($it * -self::META_SEEK_LEN, SEEK_END);
       $bytes= $this->in->read(self::META_SEEK_LEN).$bytes;
       if (false !== ($p= strpos($bytes, self::MAGIC_BYTES))) {
-        $this->meta= (new Data(new MemoryInputStream(substr($bytes, $p + self::MAGIC_LENGTH))))->decode();
-        $this->meta['search_tree_size']= ($this->meta['node_count'] * $this->meta['record_size'] / 4);
-        //echo \xp::stringOf($this->meta), "\n";
+        $this->initialize((new Data(new MemoryInputStream(substr($bytes, $p + self::MAGIC_LENGTH))))->decode());
         return;
       }
     } while ($it++ < self::META_MAX_ITNS);
@@ -48,6 +46,56 @@ class Reader extends \lang\Object {
       'Cannot find start of meta data (scanned last %d bytes of input)',
       $it * self::META_SEEK_LEN
     ));
+  }
+
+  /**
+   * Initializes reader with given meta data
+   *
+   * @param  [:var] $meta
+   * @return void
+   * @throws lang.FormatException
+   */
+  private function initialize($meta) {
+    $this->meta= $meta;
+    $this->meta['search_tree_size']= ($this->meta['node_count'] * $this->meta['record_size'] / 4);
+    switch ($this->meta['record_size']) {
+      case 24: {
+        $this->meta['read_node']= function($number, $index) {
+          $this->in->seek($number * 6 + $index * 3, SEEK_SET);
+          return unpack('N', "\x00".$this->in->read(3))[1];
+        };
+        break;
+      }
+
+      case 28: {
+        $this->meta['read_node']= function($number, $index) {
+          $this->in->seek($number * 7 + 3, SEEK_SET);
+          if (0 === $index) {
+            $middle= (0xf0 & unpack('C', $this->in->read(1))[1]) >> 4;
+          } else {
+            $middle= 0x0f & unpack('C', $this->in->read(1))[1];
+          }
+
+          $this->in->seek($number * 7 + $index * 4, SEEK_SET);
+          return unpack('N', chr($middle).$this->in->read(3))[1];
+        };
+        break;
+      }
+
+      case 32: {
+        $this->meta['read_node']= function($number, $index) {
+          $this->in->seek($number * 8 + $index * 4, SEEK_SET);
+          return unpack('N', $this->in->read(4))[1];
+        };
+        break;
+      }
+
+      default: {
+        throw new FormatException('Unsupported record size '.$this->meta['record_size']);
+      }
+    }
+
+    //echo \xp::stringOf($this->meta), "\n";
   }
 
   /**
@@ -61,17 +109,18 @@ class Reader extends \lang\Object {
     $count= sizeof($bytes);
     $node= 0;
     $nodes= $this->meta['node_count'];
+    $read= $this->meta['read_node'];
 
     // Skip first 96 nodes if we're looking up an IPv4 address in an IPv6 file.
     if (6 === $this->meta['ip_version'] && 4 === $count) {
       for ($i= 0; $i < 96 && $node < $nodes; $i++) {
-        $node= $this->node($node, 0);
+        $node= $read($node, 0);
       }
     }
 
     for ($i= 0; $i < $count * 8 && $node < $nodes; $i++) {
       $bit= 1 & ((0xff & $bytes[$i >> 3]) >> 7 - ($i % 8));
-      $node= $this->node($node, $bit);
+      $node= $read($node, $bit);
     }
 
     if ($nodes === $node) {
@@ -83,45 +132,5 @@ class Reader extends \lang\Object {
     }
 
     throw new IllegalStateException('Should not arrive here');
-  }
-
-  /**
-   * Reads a given node
-   *
-   * @param  int $number
-   * @param  int $index
-   * @return int
-   */
-  private function node($number, $index) {
-    switch ($this->meta['record_size']) {
-      case 24: {
-        $this->in->seek($number * 6 + $index * 3, SEEK_SET);
-        return unpack('N', "\x00".$this->in->read(3))[1];
-        break;
-      }
-
-      case 28: {
-        $this->in->seek($number * 7 + 3, SEEK_SET);
-        if (0 === $index) {
-          $middle= (0xf0 & unpack('C', $this->in->read(1))[1]) >> 4;
-        } else {
-          $middle= 0x0f & unpack('C', $this->in->read(1))[1];
-        }
-
-        $this->in->seek($number * 7 + $index * 4, SEEK_SET);
-        return unpack('N', chr($middle).$this->in->read(3))[1];
-        break;
-      }
-
-      case 32: {
-        $this->in->seek($number * 8 + $index * 4, SEEK_SET);
-        return unpack('N', $this->in->read(4))[1];
-        break;
-      }
-
-      default: {
-        throw new IllegalStateException('Unhandled record size '.\xp::stringOf($this->meta));
-      }
-    }
   }
 }
