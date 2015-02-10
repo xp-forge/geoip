@@ -85,7 +85,7 @@ class Record extends \lang\Object {
       \xp::stringOf($this->continent()),
       str_replace("\n", "\n  ", \xp::stringOf($this->postalCode())),
       str_replace("\n", "\n  ", \xp::stringOf($this->location())),
-      \xp::stringOf($this->subdivisions())
+      isset($this->map['subdivisions']) ? \xp::stringOf($this->subdivisions()) : '[]'
     );
   }
 }
