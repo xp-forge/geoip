@@ -24,7 +24,7 @@ $database->close();
 //   [city        ] com.maxmind.geoip.Name(#5375480: Mountain View)
 //   [country     ] com.maxmind.geoip.Name(#6252001: United States; code= US)
 //   [continent   ] com.maxmind.geoip.Name(#6255149: North America; code= NA)
-//   [postal      ] "94035"
+//   [postalCode  ] "94035"
 //   [location    ] com.maxmind.geoip.Location(37.386,-122.0838; tz= America/Los_Angeles)
 //   [subdivisions] [com.maxmind.geoip.Name(#5332921: California; code= CA)]
 // }
