@@ -7,26 +7,51 @@ class Record extends \lang\Object {
   public function __construct($map) { $this->map= $map; }
 
   /** @return com.maxmind.geoip.Name */
-  public function city() { return isset($this->map['city']) ? new Name($this->map['city']) : Name::$UNKNOWN; }
+  public function city() {
+    return isset($this->map['city'])
+      ? new Name($this->map['city']['geoname_id'], $this->map['city']['names'])
+      : Name::$UNKNOWN
+    ;
+  }
 
   /** @return com.maxmind.geoip.Name */
-  public function country() { return isset($this->map['country']) ? new Name($this->map['country']) : Name::$UNKNOWN; }
+  public function country() {
+    return isset($this->map['country'])
+      ? new Name($this->map['country']['geoname_id'], $this->map['country']['names'], $this->map['country']['iso_code'])
+      : Name::$UNKNOWN
+    ;
+  }
 
   /** @return com.maxmind.geoip.Name */
-  public function continent() { return isset($this->map['continent']) ? new Name($this->map['continent']) : Name::$UNKNOWN; }
+  public function continent() {
+    return isset($this->map['continent'])
+      ? new Name($this->map['continent']['geoname_id'], $this->map['continent']['names'], $this->map['continent']['code'])
+      : Name::$UNKNOWN
+    ;
+  }
 
   /** @return com.maxmind.geoip.Location */
-  public function location() { return isset($this->map['location']) ? new Location($this->map['location']) : Location::$UNKNOWN; }
+  public function location() {
+    return isset($this->map['location'])
+      ? new Location($this->map['location'])
+      : Location::$UNKNOWN
+    ;
+  }
 
   /** @return [:var] */
-  public function postal() { return isset($this->map['postal']) ? $this->map['postal'] : null; }
+  public function postal() {
+    return isset($this->map['postal'])
+      ? $this->map['postal']
+      : null
+    ;
+  }
 
   /** @return com.maxmind.geoip.Name[] */
   public function subdivisions() {
-    return isset($this->map['subdivisions']) ? array_map(
-      function($subdivision) { return new Name($subdivision); },
-      $this->map['subdivisions']
-    ) : array();
+    $newName= function($map) {
+      return new Name($map['geoname_id'], $map['names'], isset($map['iso_code']) ? $map['iso_code'] : null);
+    };
+    return isset($this->map['subdivisions']) ? array_map($newName, $this->map['subdivisions']) : [];
   }
 
   /**

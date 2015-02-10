@@ -41,7 +41,7 @@ class Location extends \lang\Object {
    * @return string
    */
   public function toString() {
-    $tz= isset($this->map['time_zone']) ? ', tz= '.$this->map['time_zone'] : '';
-    return $this->getClassName().'('.$this->map['latitude'].', '.$this->map['longitude'].$tz.')';
+    $tz= isset($this->map['time_zone']) ? '; tz= '.$this->map['time_zone'] : '';
+    return $this->getClassName().'('.$this->map['latitude'].','.$this->map['longitude'].$tz.')';
   }
 }

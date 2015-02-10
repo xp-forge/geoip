@@ -1,24 +1,37 @@
 <?php namespace com\maxmind\geoip;
 
 class Name extends \lang\Object {
-  private $map;
+  private $id, $names, $code;
   public static $UNKNOWN;
 
   static function __static() {
-    self::$UNKNOWN= newinstance(__CLASS__, [['geoname_id' => null, 'names' => ['en' => null]]], '{
+    self::$UNKNOWN= newinstance(__CLASS__, [null, [], null], '{
       static function __static() { }
       public function toString() { return "com.maxmind.geoip.Name(UNKNOWN)"; }
     }');
   }
 
-  /** @param [:var] $map */
-  public function __construct($map) { $this->map= $map; }
+  /**
+   * Creates a new name
+   *
+   * @param  int $id
+   * @param  [:string] $names
+   * @param  string $code
+   */
+  public function __construct($id, $names, $code= null) {
+    $this->id= $id;
+    $this->names= $names;
+    $this->code= $code;
+  }
 
   /** @return int */
-  public function id() { return $this->map['geoname_id']; }
+  public function id() { return $this->id; }
 
   /** @return [:string] */
-  public function names() { return $this->map['names']; }
+  public function names() { return $this->names; }
+
+  /** @return string */
+  public function code() { return $this->code; }
 
   /**
    * Gets a specific name, or NULL if the name does not exist
@@ -27,17 +40,7 @@ class Name extends \lang\Object {
    * @return string
    */
   public function name($lang= 'en') {
-    return isset($this->map['names'][$lang]) ? $this->map['names'][$lang] : null;
-  }
-
-  /**
-   * Gets a specific attribute, or NULL if the attribute does not exist
-   *
-   * @param  string $name
-   * @return string
-   */
-  public function attribute($name) {
-    return isset($this->map[$name]) ? $this->map[$name] : null;
+    return isset($this->names[$lang]) ? $this->names[$lang] : null;
   }
 
   /**
@@ -46,6 +49,7 @@ class Name extends \lang\Object {
    * @return string
    */
   public function toString() {
-    return $this->getClassName().'(#'.$this->map['geoname_id'].': '.$this->map['names']['en'].')';
+    $code= null === $this->code ? '' : '; code= '.$this->code;
+    return $this->getClassName().'(#'.$this->id.': '.$this->name('en').$code.')';
   }
 }
