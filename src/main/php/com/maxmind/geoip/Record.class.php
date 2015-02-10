@@ -3,20 +3,25 @@
 class Record extends \lang\Object {
   private $map;
 
-  public function __construct($map) {
-    $this->map= $map;
-  }
+  /** @param [:var] $map */
+  public function __construct($map) { $this->map= $map; }
 
+  /** @return com.maxmind.geoip.Name */
   public function city() { return isset($this->map['city']) ? new Name($this->map['city']) : Name::$UNKNOWN; }
 
+  /** @return com.maxmind.geoip.Name */
   public function country() { return isset($this->map['country']) ? new Name($this->map['country']) : Name::$UNKNOWN; }
 
+  /** @return com.maxmind.geoip.Name */
   public function continent() { return isset($this->map['continent']) ? new Name($this->map['continent']) : Name::$UNKNOWN; }
 
-  public function location() { return isset($this->map['location']) ? $this->map['location'] : null; }
+  /** @return com.maxmind.geoip.Location */
+  public function location() { return isset($this->map['location']) ? new Location($this->map['location']) : Location::$UNKNOWN; }
 
+  /** @return [:var] */
   public function postal() { return isset($this->map['postal']) ? $this->map['postal'] : null; }
 
+  /** @return com.maxmind.geoip.Name[] */
   public function subdivisions() {
     return isset($this->map['subdivisions']) ? array_map(
       function($subdivision) { return new Name($subdivision); },
@@ -24,6 +29,21 @@ class Record extends \lang\Object {
     ) : array();
   }
 
+  /**
+   * Gets a specific attribute, or NULL if the attribute does not exist
+   *
+   * @param  string $name
+   * @return string
+   */
+  public function attribute($name) {
+    return isset($this->map[$name]) ? $this->map[$name] : null;
+  }
+
+  /**
+   * Creates a string representation of this name
+   *
+   * @return string
+   */
   public function toString() {
     return sprintf(
       "%s@{\n".

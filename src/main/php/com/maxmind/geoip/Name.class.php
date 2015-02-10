@@ -11,18 +11,40 @@ class Name extends \lang\Object {
     }');
   }
 
-  public function __construct($map) {
-    $this->map= $map;
-  }
+  /** @param [:var] $map */
+  public function __construct($map) { $this->map= $map; }
 
+  /** @return int */
   public function id() { return $this->map['geoname_id']; }
 
-  public function name($lang= 'en') { return isset($this->map['names'][$lang]) ? $this->map['names'][$lang] : null; }
-
+  /** @return [:string] */
   public function names() { return $this->map['names']; }
 
-  public function attribute($name) { return isset($this->map[$name]) ? $this->map[$name] : null; }
+  /**
+   * Gets a specific name, or NULL if the name does not exist
+   *
+   * @param  string $lang
+   * @return string
+   */
+  public function name($lang= 'en') {
+    return isset($this->map['names'][$lang]) ? $this->map['names'][$lang] : null;
+  }
 
+  /**
+   * Gets a specific attribute, or NULL if the attribute does not exist
+   *
+   * @param  string $name
+   * @return string
+   */
+  public function attribute($name) {
+    return isset($this->map[$name]) ? $this->map[$name] : null;
+  }
+
+  /**
+   * Creates a string representation of this name
+   *
+   * @return string
+   */
   public function toString() {
     return $this->getClassName().'(#'.$this->map['geoname_id'].': '.$this->map['names']['en'].')';
   }
