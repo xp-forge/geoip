@@ -1,6 +1,7 @@
 <?php namespace com\maxmind\geoip;
 
 use io\streams\InputStream;
+use io\streams\Seekable;
 use io\streams\MemoryInputStream;
 use lang\FormatException;
 use lang\IllegalStateException;
@@ -14,9 +15,19 @@ class Reader extends \lang\Object {
 
   private $in, $meta;
 
+  /**
+   * Creates a new reader instance
+   *
+   * @param  io.streams.InputStream $in
+   * @throws lang.IllegalArgumentException if stream is not seekable
+   * @throws lang.FormatException if the meta data cannot be found
+   */
   public function __construct(InputStream $in) {
-    $this->in= $in;
+    if (!$in instanceof Seekable) {
+      throw new IllegalArgumentException('Must pass a seekable stream');
+    }
 
+    $this->in= $in;
     $magic= self::MAGIC_BYTES;
 
     // Go to EOF, seek backwards
@@ -39,6 +50,12 @@ class Reader extends \lang\Object {
     ));
   }
 
+  /**
+   * Looks up an IP address
+   *
+   * @param  string $addr
+   * @return var or NULL if nothing is found.
+   */
   public function lookup($addr) {
     $bytes= array_values(unpack('C*', inet_pton($addr)));
     $count= sizeof($bytes);
@@ -52,8 +69,7 @@ class Reader extends \lang\Object {
       }
     }
 
-    for ($i= 0; $i < $count * 8; $i++) {
-      if ($node >= $nodes) break;
+    for ($i= 0; $i < $count * 8 && $node < $nodes; $i++) {
       $bit= 1 & ((0xff & $bytes[$i >> 3]) >> 7 - ($i % 8));
       $node= $this->node($node, $bit);
     }
@@ -69,6 +85,13 @@ class Reader extends \lang\Object {
     throw new IllegalStateException('Should not arrive here');
   }
 
+  /**
+   * Reads a given node
+   *
+   * @param  int $number
+   * @param  int $index
+   * @return int
+   */
   private function node($number, $index) {
     switch ($this->meta['record_size']) {
       case 24: {
