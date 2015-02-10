@@ -17,10 +17,10 @@ use com\maxmind\geoip\GeoIpDatabase;
 use io\streams\FileInputStream;
 
 $database= GeoIpDatabase::open(new FileInputStream('GeoLite2-City.mmdb'));
-$results= $database->lookup('8.8.8.8');
+$record= $database->lookup('8.8.8.8');
 $database->close();
 
-// com.maxmind.geoip.Record@{
+// $record= com.maxmind.geoip.Record@{
 //   [city        ] com.maxmind.geoip.Name(#5375480: Mountain View)
 //   [country     ] com.maxmind.geoip.Name(#6252001: United States; code= US)
 //   [continent   ] com.maxmind.geoip.Name(#6255149: North America; code= NA)
