@@ -11,6 +11,8 @@ class Name extends \lang\Object {
 
   public function name($lang= 'en') { return $this->map['names'][$lang]; }
 
+  public function names() { return $this->map['names']; }
+
   public function attribute($name) { return $this->map[$name]; }
 
   public function toString() {
