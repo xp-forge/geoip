@@ -27,7 +27,7 @@ $database->close();
 //   [postal      ] [
 //     code => "94035"
 //   ]
-//   [location    ] com.maxmind.geoip.Location(37.386, -122.0838, tz= America/Los_Angeles, metro= 807)
+//   [location    ] com.maxmind.geoip.Location(37.386, -122.0838, tz= America/Los_Angeles)
 //   [subdivisions] [com.maxmind.geoip.Name(#5332921: California)]
 // }
 ```
