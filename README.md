@@ -39,4 +39,5 @@ $database->close();
 
 See also
 --------
-http://maxmind.github.io/MaxMind-DB/
+http://dev.maxmind.com/geoip/geoip2/geolite2/ GeoLite2 Free Downloadable Databases
+http://maxmind.github.io/MaxMind-DB/ MaxMind DB File Format Specification
