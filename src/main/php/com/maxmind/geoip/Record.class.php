@@ -39,9 +39,9 @@ class Record extends \lang\Object {
   }
 
   /** @return [:var] */
-  public function postal() {
+  public function postalCode() {
     return isset($this->map['postal'])
-      ? $this->map['postal']
+      ? $this->map['postal']['code']
       : null
     ;
   }
@@ -75,7 +75,7 @@ class Record extends \lang\Object {
       "  [city        ] %s\n".
       "  [country     ] %s\n".
       "  [continent   ] %s\n".
-      "  [postal      ] %s\n".
+      "  [postalCode  ] %s\n".
       "  [location    ] %s\n".
       "  [subdivisions] %s\n".
       "}",
@@ -83,7 +83,7 @@ class Record extends \lang\Object {
       \xp::stringOf($this->city()),
       \xp::stringOf($this->country()),
       \xp::stringOf($this->continent()),
-      str_replace("\n", "\n  ", \xp::stringOf($this->postal())),
+      str_replace("\n", "\n  ", \xp::stringOf($this->postalCode())),
       str_replace("\n", "\n  ", \xp::stringOf($this->location())),
       \xp::stringOf($this->subdivisions())
     );
