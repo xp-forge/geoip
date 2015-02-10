@@ -184,11 +184,19 @@ class Input extends \lang\Object {
   /**
    * Returns the offset of an address, or -1 if nothing is found.
    *
+   * @see    php://inet_pton
    * @param  string $addr
    * @return int
+   * @throws lang.IllegalArgumentException if given address is not a valid IP
    */
   public function offsetOf($addr) {
-    $bytes= unpack('C*', inet_pton($addr));
+    if (false === ($packed= inet_pton($addr))) {
+      $e= new IllegalArgumentException('Cannot convert "'.$addr.'" to packed in_addr representation');
+      \xp::gc(__FILE__);
+      throw $e;
+    }
+
+    $bytes= unpack('C*', $packed);
     $count= sizeof($bytes) * 8;
     $node= 0;
     $nodes= $this->meta['node_count'];

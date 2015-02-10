@@ -3,6 +3,7 @@
 use com\maxmind\geoip\GeoIpDatabase;
 use io\streams\FileInputStream;
 use lang\ClassLoader;
+use lang\IllegalArgumentException;
 use unittest\PrerequisitesNotMetError;
 
 class GeoIpDatabaseTest extends \unittest\TestCase {
@@ -36,5 +37,11 @@ class GeoIpDatabaseTest extends \unittest\TestCase {
   public function lookup_v6_localhost() {
     $reader= GeoIpDatabase::open($this->loader->getResourceAsStream(self::DATABASE)->in());
     $this->assertEquals(null, $reader->lookup('::1'));
+  }
+
+  #[@test, @expect(IllegalArgumentException::class), @values([null, '', 'not.an.ip', '::not-v6'])]
+  public function lookup_raises_an_exception_when_input_is_not_an_ip_address($value) {
+    $reader= GeoIpDatabase::open($this->loader->getResourceAsStream(self::DATABASE)->in());
+    $reader->lookup($value);
   }
 }
