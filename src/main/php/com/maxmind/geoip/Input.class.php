@@ -6,6 +6,7 @@ use lang\FormatException;
 use lang\IllegalStateException;
 use lang\IllegalArgumentException;
 use math\BigInt;
+use io\ByteOrder;
 
 class Input extends \lang\Object {
   const MAGIC_BYTES        = "\xab\xcd\xefMaxMind.com";
@@ -32,7 +33,7 @@ class Input extends \lang\Object {
   const TYPE_FLOAT         = 0x0f;
 
   private $in, $meta;
-  private static $READ;
+  private static $READ, $REORDER;
 
   static function __static() {
     self::$READ= [
@@ -93,6 +94,8 @@ class Input extends \lang\Object {
         throw new IllegalStateException('TYPE_FLOAT not yet implemented');
       },
     ];
+
+    self::$REORDER= (ByteOrder::nativeOrder() === LITTLE_ENDIAN);
   }
 
   /**
@@ -237,12 +240,12 @@ class Input extends \lang\Object {
 
   private function nextDouble($size) {
     $bytes= $this->in->read($size);
-    return unpack('d', $bytes)[1];    // FIXME: Endianess!
+    return unpack('d', self::$REORDER ? strrev($bytes) : $bytes)[1];
   }
 
   private function nextInt($size) {
     $bytes= $this->in->read($size);
-    return unpack('l', str_pad($bytes, 4, "\x00", STR_PAD_LEFT))[1];    // FIXME: Endianess!
+    return unpack('l', str_pad(self::$REORDER ? strrev($bytes) : $bytes, 4, "\x00", STR_PAD_LEFT))[1];
   }
 
   private function nextUint($size) {

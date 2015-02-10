@@ -36,8 +36,8 @@ $database->close();
 //     names => [en => "United States"]
 //   ]
 //   location => [
-//     latitude => -1.0088030043764E+25
-//     longitude => -1.1995528675396E+197
+//     latitude => 37.386
+//     longitude => -122.0838
 //     metro_code => 807
 //     time_zone => "America/Los_Angeles"
 //   ]
