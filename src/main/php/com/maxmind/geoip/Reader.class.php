@@ -105,7 +105,7 @@ class Reader extends \lang\Object {
    * @return var or NULL if nothing is found.
    */
   public function lookup($addr) {
-    $bytes= array_values(unpack('C*', inet_pton($addr)));
+    $bytes= unpack('C*', inet_pton($addr));
     $count= sizeof($bytes) * 8;
     $node= 0;
     $nodes= $this->meta['node_count'];
@@ -119,8 +119,7 @@ class Reader extends \lang\Object {
     }
 
     for ($i= 0; $i < $count && $node < $nodes; $i++) {
-      $bit= 1 & ((0xff & $bytes[$i >> 3]) >> 7 - ($i % 8));
-      $node= $read($node, $bit);
+      $node= $read($node, 1 & ((0xff & $bytes[1 + ($i >> 3)]) >> 7 - ($i % 8)));
     }
 
     if ($nodes === $node) {
