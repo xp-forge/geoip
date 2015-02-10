@@ -33,7 +33,7 @@ class Record extends \lang\Object {
   /** @return com.maxmind.geoip.Location */
   public function location() {
     return isset($this->map['location'])
-      ? new Location($this->map['location'])
+      ? new Location($this->map['location']['latitude'], $this->map['location']['longitude'], $this->map['location'])
       : Location::$UNKNOWN
     ;
   }
