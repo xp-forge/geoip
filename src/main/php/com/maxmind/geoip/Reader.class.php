@@ -106,19 +106,19 @@ class Reader extends \lang\Object {
    */
   public function lookup($addr) {
     $bytes= array_values(unpack('C*', inet_pton($addr)));
-    $count= sizeof($bytes);
+    $count= sizeof($bytes) * 8;
     $node= 0;
     $nodes= $this->meta['node_count'];
     $read= $this->meta['read_node'];
 
     // Skip first 96 nodes if we're looking up an IPv4 address in an IPv6 file.
-    if (6 === $this->meta['ip_version'] && 4 === $count) {
+    if (6 === $this->meta['ip_version'] && 32 === $count) {
       for ($i= 0; $i < 96 && $node < $nodes; $i++) {
         $node= $read($node, 0);
       }
     }
 
-    for ($i= 0; $i < $count * 8 && $node < $nodes; $i++) {
+    for ($i= 0; $i < $count && $node < $nodes; $i++) {
       $bit= 1 & ((0xff & $bytes[$i >> 3]) >> 7 - ($i % 8));
       $node= $read($node, $bit);
     }
