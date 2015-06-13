@@ -8,6 +8,11 @@ use lang\IllegalArgumentException;
 use math\BigInt;
 use io\ByteOrder;
 
+/**
+ * Raw access on input
+ *
+ * @test  xp://com.maxmind.geoip.unittest.InputTest
+ */
 class Input extends \lang\Object {
   const MAGIC_BYTES        = "\xab\xcd\xefMaxMind.com";
   const MAGIC_LENGTH       = 14;
