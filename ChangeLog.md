@@ -3,6 +3,14 @@ GeoIP database ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 1.0.0 / 2015-12-14
+
+* **Heads up**: Changed minimum XP version to XP 6.5.0, and with it the
+  minimum PHP version to PHP 5.5.
+  (@thekid)
+* Added official PHP 7 support
+  (@thekid)
+
 ## 0.2.0 / 2015-02-11
 
 * Verified HHVM 3.4+ works - @thekid

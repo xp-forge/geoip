@@ -1,5 +1,6 @@
 <?php namespace com\maxmind\geoip\unittest;
 
+use io\streams\InputStream;
 use com\maxmind\geoip\Input;
 use lang\ClassLoader;
 use lang\IllegalArgumentException;
@@ -26,7 +27,7 @@ class InputTest extends \unittest\TestCase {
 
   #[@test, @expect(IllegalArgumentException::class)]
   public function cannot_open_non_seekable_stream() {
-    new Input(newinstance('io.streams.InputStream', [], [
+    new Input(newinstance(InputStream::class, [], [
       'read'      => function($limit= 8192) { },
       'available' => function() { return -1; },
       'close'     => function() { }
