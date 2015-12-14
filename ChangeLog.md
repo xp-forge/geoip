@@ -3,6 +3,10 @@ GeoIP database ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Forward compatibility with XP7: Added dependencies on math and unittest
+  libraries.
+  (@thekid)
+
 ## 1.0.0 / 2015-12-14
 
 * **Heads up**: Changed minimum XP version to XP 6.5.0, and with it the
