@@ -79,7 +79,7 @@ class Record extends \lang\Object {
       "  [location    ] %s\n".
       "  [subdivisions] %s\n".
       "}",
-      $this->getClassName(),
+      nameof($this),
       \xp::stringOf($this->city()),
       \xp::stringOf($this->country()),
       \xp::stringOf($this->continent()),

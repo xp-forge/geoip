@@ -3,8 +3,10 @@ GeoIP database ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 1.1.0 / 2016-01-23
+
 * Forward compatibility with XP7: Added dependencies on math and unittest
-  libraries.
+  libraries, rewrote getClassName() to `nameof()`.
   (@thekid)
 
 ## 1.0.0 / 2015-12-14

@@ -55,7 +55,7 @@ class Location extends \lang\Object {
    */
   public function toString() {
     $tz= isset($this->attr['time_zone']) ? '; tz= '.$this->attr['time_zone'] : '';
-    return $this->getClassName().'('.$this->lat.','.$this->long.$tz.')';
+    return nameof($this).'('.$this->lat.','.$this->long.$tz.')';
   }
 
   /**

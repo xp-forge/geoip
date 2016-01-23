@@ -50,6 +50,6 @@ class Name extends \lang\Object {
    */
   public function toString() {
     $code= null === $this->code ? '' : '; code= '.$this->code;
-    return $this->getClassName().'(#'.$this->id.': '.$this->name('en').$code.')';
+    return nameof($this).'(#'.$this->id.': '.$this->name('en').$code.')';
   }
 }
