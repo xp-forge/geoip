@@ -3,6 +3,10 @@ GeoIP database ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 2.0.0 / 2016-02-21
+
+* Added version compatibility with XP 7 - @thekid
+
 ## 1.1.0 / 2016-01-23
 
 * Forward compatibility with XP7: Added dependencies on math and unittest
