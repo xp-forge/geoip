@@ -3,6 +3,10 @@ GeoIP database ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 2.1.0 / 2016-08-29
+
+* Added version compatibility with XP 8 - @thekid
+
 ## 2.0.0 / 2016-02-21
 
 * Added version compatibility with XP 7 - @thekid
