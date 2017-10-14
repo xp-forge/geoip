@@ -13,7 +13,7 @@ use io\ByteOrder;
  *
  * @test  xp://com.maxmind.geoip.unittest.InputTest
  */
-class Input extends \lang\Object {
+class Input {
   const MAGIC_BYTES        = "\xab\xcd\xefMaxMind.com";
   const MAGIC_LENGTH       = 14;
   const META_SEEK_LEN      = 512;

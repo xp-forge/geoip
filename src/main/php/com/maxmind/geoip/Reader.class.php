@@ -6,7 +6,7 @@ use io\streams\MemoryInputStream;
 use lang\FormatException;
 use lang\IllegalStateException;
 
-class Reader extends \lang\Object implements \lang\Closeable {
+class Reader implements \lang\Closeable {
   private $in;
 
   /**

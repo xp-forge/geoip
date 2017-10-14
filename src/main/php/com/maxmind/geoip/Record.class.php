@@ -1,6 +1,8 @@
 <?php namespace com\maxmind\geoip;
 
-class Record extends \lang\Object {
+use util\Objects;
+
+class Record implements \lang\Value {
   private $map;
 
   /** @param [:var] $map */
@@ -65,7 +67,7 @@ class Record extends \lang\Object {
   }
 
   /**
-   * Creates a string representation of this name
+   * Creates a string representation of this record
    *
    * @return string
    */
@@ -87,5 +89,24 @@ class Record extends \lang\Object {
       str_replace("\n", "\n  ", \xp::stringOf($this->location())),
       isset($this->map['subdivisions']) ? \xp::stringOf($this->subdivisions()) : '[]'
     );
+  }
+
+  /**
+   * Creates a hash code of this record
+   *
+   * @return string
+   */
+  public function hashCode() {
+    return 'R'.Objects::hashOf($this->map);
+  }
+
+  /**
+   * Compares a given value to this record
+   *
+   * @param  var $value
+   * @return int
+   */
+  public function compareTo($value) {
+    return $value instanceof self ? Objects::compare($this->map, $value->map) : 1;
   }
 }

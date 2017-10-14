@@ -3,7 +3,7 @@
 use util\TimeZone;
 use util\Objects;
 
-class Location extends \lang\Object {
+class Location implements \lang\Value {
   private $lat, $long, $attr;
   public static $UNKNOWN;
 
@@ -59,16 +59,27 @@ class Location extends \lang\Object {
   }
 
   /**
+   * Creates a hash code of this record
+   *
+   * @return string
+   */
+  public function hashCode() {
+    return 'N'.$this->lat.$this->lon;
+  }
+
+  /**
    * Test whether a given value is equal to this location instance.
    *
-   * @param  var $cmp
-   * @return bool
+   * @param  var $value
+   * @return int
    */
-  public function equals($cmp) {
-    return $cmp instanceof self && (
-      abs($this->lat - $cmp->lat) < 0.00001 &&
-      abs($this->long - $cmp->long) < 0.00001 &&
-      Objects::equal($this->attr, $cmp->attr)
+  public function compareTo($value) {
+    $equal= (
+      $value instanceof self &&
+      abs($this->lat - $value->lat) < 0.00001 &&
+      abs($this->long - $value->long) < 0.00001 &&
+      Objects::equal($this->attr, $value->attr)
     );
+    return $equal ? 0 : 1;
   }
 }

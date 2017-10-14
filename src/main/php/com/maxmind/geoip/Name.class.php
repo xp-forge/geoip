@@ -1,6 +1,6 @@
 <?php namespace com\maxmind\geoip;
 
-class Name extends \lang\Object {
+class Name implements \lang\Value {
   private $id, $names, $code;
   public static $UNKNOWN;
 
@@ -51,5 +51,24 @@ class Name extends \lang\Object {
   public function toString() {
     $code= null === $this->code ? '' : '; code= '.$this->code;
     return nameof($this).'(#'.$this->id.': '.$this->name('en').$code.')';
+  }
+
+  /**
+   * Creates a hash code of this record
+   *
+   * @return string
+   */
+  public function hashCode() {
+    return 'N'.$this->id.$this->code;
+  }
+
+  /**
+   * Compares a given value to this record
+   *
+   * @param  var $value
+   * @return int
+   */
+  public function compareTo($value) {
+    return $value instanceof self ? strcmp($this->id.$this->code, $value->id.$value->code) : 1;
   }
 }

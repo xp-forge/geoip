@@ -2,7 +2,7 @@
 
 use io\streams\InputStream;
 
-class GeoIpDatabase extends \lang\Object {
+class GeoIpDatabase {
 
   public static function open(InputStream $in) {
     return new Reader($in);
