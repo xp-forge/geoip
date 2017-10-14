@@ -3,6 +3,12 @@ GeoIP database ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 3.0.0 / 2017-10-14
+
+* Added version compatibility with XP 9 - @thekid
+* **Heads up: Dropped PHP 5.5 support**. Minimum PHP version is now PHP 5.6.0
+  (@thekid)
+
 ## 2.1.0 / 2016-08-29
 
 * Added version compatibility with XP 8 - @thekid
