@@ -15,9 +15,9 @@ Examples
 
 ```php
 use com\maxmind\geoip\GeoIpDatabase;
-use io\streams\FileInputStream;
+use io\File;
 
-$database= GeoIpDatabase::open(new FileInputStream('GeoLite2-City.mmdb'));
+$database= GeoIpDatabase::open(new File('GeoLite2-City.mmdb'));
 $record= $database->lookup('8.8.8.8');
 $database->close();
 

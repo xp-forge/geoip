@@ -1,12 +1,13 @@
 <?php namespace com\maxmind\geoip;
 
 use io\streams\InputStream;
-use io\streams\Seekable;
 use io\streams\MemoryInputStream;
+use io\streams\Seekable;
+use lang\Closeable;
 use lang\FormatException;
 use lang\IllegalStateException;
 
-class Reader implements \lang\Closeable {
+class Reader implements Closeable {
   private $in;
 
   /**

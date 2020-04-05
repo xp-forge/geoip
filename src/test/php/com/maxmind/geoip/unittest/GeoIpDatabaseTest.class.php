@@ -13,12 +13,22 @@ class GeoIpDatabaseTest extends \unittest\TestCase {
    * Sets up test
    */
   public function setUp() {
-    $this->fixture= ClassLoader::getDefault()->getResourceAsStream(self::DATABASE)->in();
+    $this->fixture= ClassLoader::getDefault()->getResourceAsStream(self::DATABASE);
   }
 
   #[@test]
-  public function open() {
+  public function open_file() {
     GeoIpDatabase::open($this->fixture);
+  }
+
+  #[@test]
+  public function open_uri() {
+    GeoIpDatabase::open($this->fixture->getURI());
+  }
+
+  #[@test]
+  public function open_stream() {
+    GeoIpDatabase::open($this->fixture->in());
   }
 
   #[@test]
