@@ -44,7 +44,7 @@ class Location implements \lang\Value {
    * @return string
    */
   public function attribute($name) {
-    return isset($this->attr[$name]) ? $this->attr[$name] : null;
+    return $this->attr[$name] ?? null;
   }
 
   /**

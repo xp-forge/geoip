@@ -40,7 +40,7 @@ class Name implements \lang\Value {
    * @return string
    */
   public function name($lang= 'en') {
-    return isset($this->names[$lang]) ? $this->names[$lang] : null;
+    return $this->names[$lang] ?? null;
   }
 
   /**

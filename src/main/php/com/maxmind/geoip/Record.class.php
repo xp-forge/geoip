@@ -1,8 +1,9 @@
 <?php namespace com\maxmind\geoip;
 
+use lang\Value;
 use util\Objects;
 
-class Record implements \lang\Value {
+class Record implements Value {
   private $map;
 
   /** @param [:var] $map */
@@ -42,10 +43,7 @@ class Record implements \lang\Value {
 
   /** @return [:var] */
   public function postalCode() {
-    return isset($this->map['postal'])
-      ? $this->map['postal']['code']
-      : null
-    ;
+    return $this->map['postal']['code'] ?? null;
   }
 
   /** @return com.maxmind.geoip.Name[] */
@@ -63,7 +61,7 @@ class Record implements \lang\Value {
    * @return string
    */
   public function attribute($name) {
-    return isset($this->map[$name]) ? $this->map[$name] : null;
+    return $this->map[$name] ?? null;
   }
 
   /**
@@ -82,12 +80,12 @@ class Record implements \lang\Value {
       "  [subdivisions] %s\n".
       "}",
       nameof($this),
-      \xp::stringOf($this->city()),
-      \xp::stringOf($this->country()),
-      \xp::stringOf($this->continent()),
-      str_replace("\n", "\n  ", \xp::stringOf($this->postalCode())),
-      str_replace("\n", "\n  ", \xp::stringOf($this->location())),
-      isset($this->map['subdivisions']) ? \xp::stringOf($this->subdivisions()) : '[]'
+      Objects::stringOf($this->city()),
+      Objects::stringOf($this->country()),
+      Objects::stringOf($this->continent()),
+      str_replace("\n", "\n  ", Objects::stringOf($this->postalCode())),
+      str_replace("\n", "\n  ", Objects::stringOf($this->location())),
+      isset($this->map['subdivisions']) ? Objects::stringOf($this->subdivisions()) : '[]'
     );
   }
 
