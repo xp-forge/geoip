@@ -1,9 +1,7 @@
 <?php namespace com\maxmind\geoip\unittest;
 
-use com\maxmind\geoip\GeoIpDatabase;
-use com\maxmind\geoip\Location;
-use lang\ClassLoader;
-use lang\IllegalArgumentException;
+use com\maxmind\geoip\{GeoIpDatabase, Location};
+use lang\{ClassLoader, IllegalArgumentException};
 
 class GeoIpDatabaseTest extends \unittest\TestCase {
   const DATABASE = 'GeoIP2-City-Test.mmdb';

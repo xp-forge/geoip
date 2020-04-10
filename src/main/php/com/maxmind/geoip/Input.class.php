@@ -1,12 +1,9 @@
 <?php namespace com\maxmind\geoip;
 
-use io\streams\InputStream;
-use io\streams\Seekable;
-use lang\FormatException;
-use lang\IllegalStateException;
-use lang\IllegalArgumentException;
-use math\BigInt;
 use io\ByteOrder;
+use io\streams\{InputStream, Seekable};
+use lang\{FormatException, IllegalArgumentException, IllegalStateException};
+use math\BigInt;
 
 /**
  * Raw access on input

@@ -1,7 +1,6 @@
 <?php namespace com\maxmind\geoip;
 
-use util\TimeZone;
-use util\Objects;
+use util\{Objects, TimeZone};
 
 class Location implements \lang\Value {
   private $lat, $long, $attr;

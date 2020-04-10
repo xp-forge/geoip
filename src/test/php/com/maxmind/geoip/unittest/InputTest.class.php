@@ -1,11 +1,8 @@
 <?php namespace com\maxmind\geoip\unittest;
 
-use io\streams\InputStream;
 use com\maxmind\geoip\Input;
-use lang\ClassLoader;
-use lang\IllegalArgumentException;
-use lang\FormatException;
-use io\streams\MemoryInputStream;
+use io\streams\{InputStream, MemoryInputStream};
+use lang\{ClassLoader, FormatException, IllegalArgumentException};
 
 class InputTest extends \unittest\TestCase {
 

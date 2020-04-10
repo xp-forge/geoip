@@ -1,7 +1,6 @@
 <?php namespace com\maxmind\geoip;
 
-use io\streams\FileInputStream;
-use io\streams\InputStream;
+use io\streams\{FileInputStream, InputStream};
 
 class GeoIpDatabase {
 
