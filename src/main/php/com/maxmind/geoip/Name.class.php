@@ -1,14 +1,16 @@
 <?php namespace com\maxmind\geoip;
 
-class Name implements \lang\Value {
+use lang\Value;
+
+class Name implements Value {
   private $id, $names, $code;
   public static $UNKNOWN;
 
   static function __static() {
-    self::$UNKNOWN= newinstance(__CLASS__, [null, [], null], '{
+    self::$UNKNOWN= new class(null, [], null) extends Name {
       static function __static() { }
-      public function toString() { return "com.maxmind.geoip.Name(UNKNOWN)"; }
-    }');
+      public function toString() { return 'com.maxmind.geoip.Name(UNKNOWN)'; }
+    };
   }
 
   /**
