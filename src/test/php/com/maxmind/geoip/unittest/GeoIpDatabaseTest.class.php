@@ -2,6 +2,7 @@
 
 use com\maxmind\geoip\{GeoIpDatabase, Location};
 use lang\{ClassLoader, IllegalArgumentException};
+use unittest\{Expect, Test, Values};
 
 class GeoIpDatabaseTest extends \unittest\TestCase {
   const DATABASE = 'GeoIP2-City-Test.mmdb';
@@ -14,28 +15,28 @@ class GeoIpDatabaseTest extends \unittest\TestCase {
     $this->fixture= ClassLoader::getDefault()->getResourceAsStream(self::DATABASE);
   }
 
-  #[@test]
+  #[Test]
   public function open_file() {
     GeoIpDatabase::open($this->fixture);
   }
 
-  #[@test]
+  #[Test]
   public function open_uri() {
     GeoIpDatabase::open($this->fixture->getURI());
   }
 
-  #[@test]
+  #[Test]
   public function open_stream() {
     GeoIpDatabase::open($this->fixture->in());
   }
 
-  #[@test]
+  #[Test]
   public function lookup_v4_localhost() {
     $reader= GeoIpDatabase::open($this->fixture);
     $this->assertEquals(null, $reader->lookup('127.0.0.1'));
   }
 
-  #[@test]
+  #[Test]
   public function lookup_89_160_20_128_slash_121() {
     $record= GeoIpDatabase::open($this->fixture)->lookup('89.160.20.128');
     $this->assertEquals(
@@ -44,7 +45,7 @@ class GeoIpDatabaseTest extends \unittest\TestCase {
     );
   }
 
-  #[@test]
+  #[Test]
   public function lookup_216_160_83_56_slash_125() {
     $record= GeoIpDatabase::open($this->fixture)->lookup('216.160.83.56');
     $this->assertEquals(
@@ -53,13 +54,13 @@ class GeoIpDatabaseTest extends \unittest\TestCase {
     );
   }
 
-  #[@test]
+  #[Test]
   public function lookup_v6_localhost() {
     $reader= GeoIpDatabase::open($this->fixture);
     $this->assertEquals(null, $reader->lookup('::1'));
   }
 
-  #[@test]
+  #[Test]
   public function lookup_2001_256_slash_32() {
     $record= GeoIpDatabase::open($this->fixture)->lookup('2001:256::');
     $this->assertEquals(
@@ -68,7 +69,7 @@ class GeoIpDatabaseTest extends \unittest\TestCase {
     );
   }
 
-  #[@test]
+  #[Test]
   public function lookup_2a02_da80_slash_29() {
     $record= GeoIpDatabase::open($this->fixture)->lookup('2a02:da80::');
     $this->assertEquals(
@@ -77,7 +78,7 @@ class GeoIpDatabaseTest extends \unittest\TestCase {
     );
   }
 
-  #[@test, @expect(IllegalArgumentException::class), @values([null, '', 'not.an.ip', '::not-v6'])]
+  #[Test, Expect(IllegalArgumentException::class), Values([null, '', 'not.an.ip', '::not-v6'])]
   public function lookup_raises_an_exception_when_input_is_not_an_ip_address($value) {
     $reader= GeoIpDatabase::open($this->fixture);
     $reader->lookup($value);
