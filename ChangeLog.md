@@ -3,6 +3,10 @@ GeoIP database ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 4.0.1 / 2021-10-24
+
+* Made compatible with XP 11 - @thekid
+
 ## 4.0.0 / 2020-04-10
 
 * Implemented xp-framework/rfc#334: Drop PHP 5.6:
