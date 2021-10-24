@@ -3,9 +3,9 @@
 use com\maxmind\geoip\Input;
 use io\streams\{InputStream, MemoryInputStream};
 use lang\{ClassLoader, FormatException, IllegalArgumentException};
-use unittest\{Expect, Test};
+use unittest\{Assert, Expect, Test};
 
-class InputTest extends \unittest\TestCase {
+class InputTest {
 
   /**
    * Returns a class loader resource
@@ -40,14 +40,14 @@ class InputTest extends \unittest\TestCase {
   #[Test]
   public function offset_of_existing_ip() {
     $input= new Input($this->resourceNamed('GeoIP2-City-Test.mmdb'));
-    $this->assertNotEquals(-1, $input->offsetOf('89.160.20.128'));
+    Assert::notEquals(-1, $input->offsetOf('89.160.20.128'));
     $input->close();
   }
 
   #[Test]
   public function offset_of_non_existant_ip() {
     $input= new Input($this->resourceNamed('GeoIP2-City-Test.mmdb'));
-    $this->assertEquals(-1, $input->offsetOf('127.0.0.1'));
+    Assert::equals(-1, $input->offsetOf('127.0.0.1'));
     $input->close();
   }
 }

@@ -2,15 +2,16 @@
 
 use com\maxmind\geoip\{GeoIpDatabase, Location};
 use lang\{ClassLoader, IllegalArgumentException};
-use unittest\{Expect, Test, Values};
+use unittest\{Assert, Expect, Test, Values};
 
-class GeoIpDatabaseTest extends \unittest\TestCase {
+class GeoIpDatabaseTest {
   const DATABASE = 'GeoIP2-City-Test.mmdb';
   private $fixture;
 
   /**
    * Sets up test
    */
+  #[Before]
   public function setUp() {
     $this->fixture= ClassLoader::getDefault()->getResourceAsStream(self::DATABASE);
   }
@@ -33,13 +34,13 @@ class GeoIpDatabaseTest extends \unittest\TestCase {
   #[Test]
   public function lookup_v4_localhost() {
     $reader= GeoIpDatabase::open($this->fixture);
-    $this->assertEquals(null, $reader->lookup('127.0.0.1'));
+    Assert::equals(null, $reader->lookup('127.0.0.1'));
   }
 
   #[Test]
   public function lookup_89_160_20_128_slash_121() {
     $record= GeoIpDatabase::open($this->fixture)->lookup('89.160.20.128');
-    $this->assertEquals(
+    Assert::equals(
       ['Linköping', 'Sweden', new Location(58.4167, 15.6167, ['time_zone' => 'Europe/Stockholm'])],
       [$record->city()->name(), $record->country()->name(), $record->location()]
     );
@@ -48,7 +49,7 @@ class GeoIpDatabaseTest extends \unittest\TestCase {
   #[Test]
   public function lookup_216_160_83_56_slash_125() {
     $record= GeoIpDatabase::open($this->fixture)->lookup('216.160.83.56');
-    $this->assertEquals(
+    Assert::equals(
       ['Milton', 'United States', new Location(47.2513, -122.3149, ['time_zone' => 'America/Los_Angeles', 'metro_code' => 819])],
       [$record->city()->name(), $record->country()->name(), $record->location()]
     );
@@ -57,13 +58,13 @@ class GeoIpDatabaseTest extends \unittest\TestCase {
   #[Test]
   public function lookup_v6_localhost() {
     $reader= GeoIpDatabase::open($this->fixture);
-    $this->assertEquals(null, $reader->lookup('::1'));
+    Assert::equals(null, $reader->lookup('::1'));
   }
 
   #[Test]
   public function lookup_2001_256_slash_32() {
     $record= GeoIpDatabase::open($this->fixture)->lookup('2001:256::');
-    $this->assertEquals(
+    Assert::equals(
       [null, "People's Republic of China", new Location(35, 105, [])],
       [$record->city()->name(), $record->country()->name(), $record->location()]
     );
@@ -72,7 +73,7 @@ class GeoIpDatabaseTest extends \unittest\TestCase {
   #[Test]
   public function lookup_2a02_da80_slash_29() {
     $record= GeoIpDatabase::open($this->fixture)->lookup('2a02:da80::');
-    $this->assertEquals(
+    Assert::equals(
       [null, 'Austria', new Location(47.33333, 13.33333, ['time_zone' => 'Europe/Vienna'])],
       [$record->city()->name(), $record->country()->name(), $record->location()]
     );
