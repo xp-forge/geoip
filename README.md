@@ -1,10 +1,11 @@
 GeoIP database
 ==============
 
-[![Build Status on TravisCI](https://secure.travis-ci.org/xp-forge/geoip.svg)](http://travis-ci.org/xp-forge/geoip)
+[![Build status on GitHub](https://github.com/xp-forge/geoip/workflows/Tests/badge.svg)](https://github.com/xp-forge/geoip/actions)
 [![XP Framework Module](https://raw.githubusercontent.com/xp-framework/web/master/static/xp-framework-badge.png)](https://github.com/xp-framework/core)
 [![BSD Licence](https://raw.githubusercontent.com/xp-framework/web/master/static/licence-bsd.png)](https://github.com/xp-framework/core/blob/master/LICENCE.md)
-[![Requires PHP 7.0+](https://raw.githubusercontent.com/xp-framework/web/master/static/php-7_0plus.png)](http://php.net/)
+[![Requires PHP 7.0+](https://raw.githubusercontent.com/xp-framework/web/master/static/php-7_0plus.svg)](http://php.net/)
+[![Supports PHP 8.0+](https://raw.githubusercontent.com/xp-framework/web/master/static/php-8_0plus.svg)](http://php.net/)
 [![Latest Stable Version](https://poser.pugx.org/xp-forge/geoip/version.png)](https://packagist.org/packages/xp-forge/geoip)
 
 This API allows working with data geoips of different kinds in a functional style, e.g. map/reduce.
