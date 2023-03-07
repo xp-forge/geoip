@@ -3,6 +3,8 @@ GeoIP database ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Merged PR #3: Migrate to new testing library - @thekid
+
 ## 4.0.1 / 2021-10-24
 
 * Made compatible with XP 11 - @thekid
