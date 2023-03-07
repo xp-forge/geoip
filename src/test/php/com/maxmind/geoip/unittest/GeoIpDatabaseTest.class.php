@@ -2,17 +2,14 @@
 
 use com\maxmind\geoip\{GeoIpDatabase, Location};
 use lang\{ClassLoader, IllegalArgumentException};
-use unittest\{Assert, Expect, Test, Values};
+use test\{Assert, Before, Expect, Test, Values};
 
 class GeoIpDatabaseTest {
-  const DATABASE = 'GeoIP2-City-Test.mmdb';
+  const DATABASE= 'GeoIP2-City-Test.mmdb';
   private $fixture;
 
-  /**
-   * Sets up test
-   */
   #[Before]
-  public function setUp() {
+  public function fixture() {
     $this->fixture= ClassLoader::getDefault()->getResourceAsStream(self::DATABASE);
   }
 

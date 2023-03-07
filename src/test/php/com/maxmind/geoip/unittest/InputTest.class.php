@@ -3,7 +3,7 @@
 use com\maxmind\geoip\Input;
 use io\streams\{InputStream, MemoryInputStream};
 use lang\{ClassLoader, FormatException, IllegalArgumentException};
-use unittest\{Assert, Expect, Test};
+use test\{Assert, Expect, Test};
 
 class InputTest {
 
