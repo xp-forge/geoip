@@ -3,6 +3,7 @@ GeoIP database ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Added PHP 8.4 to the test matrix - @thekid
 * Merged PR #3: Migrate to new testing library - @thekid
 
 ## 4.0.1 / 2021-10-24
