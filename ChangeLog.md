@@ -3,6 +3,8 @@ GeoIP database ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 5.1.1 / 2025-08-03
+
 * Added PHP 8.5 to test matrix - @thekid
 * Changed `com.maxmind.geoip.Input` to check for exceptions when seeking
   (@thekid)
