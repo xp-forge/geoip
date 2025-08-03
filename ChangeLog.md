@@ -3,6 +3,9 @@ GeoIP database ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Changed `com.maxmind.geoip.Input` to check for exceptions when seeking
+  (@thekid)
+
 ## 5.1.0 / 2024-03-24
 
 * Made compatible with XP 12 - @thekid

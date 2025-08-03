@@ -1,7 +1,7 @@
 <?php namespace com\maxmind\geoip;
 
-use io\ByteOrder;
 use io\streams\{InputStream, Seekable};
+use io\{ByteOrder, IOException};
 use lang\{FormatException, IllegalArgumentException, IllegalStateException};
 use math\BigInt;
 
@@ -112,21 +112,24 @@ class Input {
       throw new IllegalArgumentException('Must pass a seekable stream');
     }
 
-    $this->in= $in;
-    $magic= self::MAGIC_BYTES;
-
     // Go to EOF, seek backwards
     $it= 1;
     $bytes= '';
-    do {
-      $this->in->seek($it * -self::META_SEEK_LEN, SEEK_END);
-      $bytes= $this->in->read(self::META_SEEK_LEN).$bytes;
-      if (false !== ($p= strpos($bytes, self::MAGIC_BYTES))) {
-        $this->in->seek(-self::META_SEEK_LEN + $p + self::MAGIC_LENGTH, SEEK_CUR);
-        $this->initialize($this->nextValue());
-        return;
-      }
-    } while ($it++ < self::META_MAX_ITNS);
+    try {
+      do {
+        $in->seek($it * -self::META_SEEK_LEN, SEEK_END);
+        $bytes= $in->read(self::META_SEEK_LEN).$bytes;
+        if (false !== ($p= strpos($bytes, self::MAGIC_BYTES))) {
+          $in->seek(-self::META_SEEK_LEN + $p + self::MAGIC_LENGTH, SEEK_CUR);
+
+          $this->in= $in;
+          $this->initialize($this->nextValue());
+          return;
+        }
+      } while ($it++ < self::META_MAX_ITNS);
+    } catch (IOException $e) {
+      throw new FormatException('Cannot find start of meta data', $e);
+    }
 
     throw new FormatException(sprintf(
       'Cannot find start of meta data (scanned last %d bytes of input)',
