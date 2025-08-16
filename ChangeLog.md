@@ -3,6 +3,10 @@ GeoIP database ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 5.2.0 / 2025-08-16
+
+* Added compatibility with `xp-framework/math` version 10.0+ - @thekid
+
 ## 5.1.1 / 2025-08-03
 
 * Added PHP 8.5 to test matrix - @thekid
