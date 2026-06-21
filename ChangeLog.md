@@ -3,6 +3,13 @@ GeoIP database ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 5.3.0 / 2026-06-21
+
+* Merged PR #4: Refactor I/O exceptions, dropping XP 10 support in the
+  doing. See xp-framework/core#363 for a write-up on the reason behind
+  this and the plan to move forward.
+  (@thekid)
+
 ## 5.2.0 / 2025-08-16
 
 * Added compatibility with `xp-framework/math` version 10.0+ - @thekid
