@@ -1,7 +1,7 @@
 <?php namespace com\maxmind\geoip;
 
 use io\streams\{InputStream, Seekable};
-use io\{ByteOrder, IOException};
+use io\{ByteOrder, OperationFailed};
 use lang\{FormatException, IllegalArgumentException, IllegalStateException};
 use math\BigInt;
 
@@ -127,7 +127,7 @@ class Input {
           return;
         }
       } while ($it++ < self::META_MAX_ITNS);
-    } catch (IOException $e) {
+    } catch (OperationFailed $e) {
       throw new FormatException('Cannot find start of meta data', $e);
     }
 
